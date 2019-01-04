@@ -102,13 +102,13 @@ img{display: block;}
     position: fixed;
     right: 10px;
     top: 50%;
+    transform: translate(0,-50%);
+
 }
 .rightFlags li{
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    line-height: 20px;
-    margin-bottom: 5px;
+    width: 15px;
+    height: 15px;
+    margin-top: 10px;
     border-radius: 50%;
     border: 1px solid #fff;
 }

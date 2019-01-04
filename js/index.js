@@ -12,8 +12,10 @@ window.onload=function (event) {
     //获取右部小圆点DOM对象
     var olLiNodes=document.querySelectorAll('.rightFlags li');
     var nowIndex=0;
+    var wheelTimer=0;
+    var arrowHalfWidth=arrow.offsetWidth/2;
     //初始化显示
-    arrow.style.left=headerLiNodes[0].getBoundingClientRect().left+headerLiNodes[0].offsetWidth/2-arrow.offsetWidth/2+'px';
+    arrow.style.left=headerLiNodes[0].getBoundingClientRect().left+headerLiNodes[0].offsetWidth/2-arrowHalfWidth+'px';
     headerDownNodes[0].style.width='100%';
     //导航区点击效果
     headerHandle();
@@ -34,7 +36,7 @@ window.onload=function (event) {
         }
         headerDownNodes[nowIndex].style.width='100%';
         olLiNodes[nowIndex].className='active';
-        arrow.style.left=headerLiNodes[nowIndex].getBoundingClientRect().left+headerLiNodes[nowIndex].offsetWidth/2-arrow.offsetWidth/2+'px';
+        arrow.style.left=headerLiNodes[nowIndex].getBoundingClientRect().left+headerLiNodes[nowIndex].offsetWidth/2-arrowHalfWidth+'px';
         contentUlNode.style.top=-nowIndex*content.offsetHeight+'px';
     };
     //右侧小圆点点击效果
@@ -53,39 +55,51 @@ window.onload=function (event) {
     //内容区绑定滚轮事件
     document.onmousewheel=wheel;
     document.addEventListener('DOMMouseScroll',wheel);
-
     //滚轮功能函数
     function wheel(event) {
         var flag='';
         event=event||window.event;
-        if(event.wheelDelta){
-            //IE chrome
-            if(event.wheelDelta>0){
-                flag='up';
-            }else {
-                flag='down';
-            }
-        } else if(event.detail){
-            //firefox
-            if(event.detail<0){
-                flag='up';
-            }else {
-                flag='down';
-            }
-        }
-        switch (flag){
-            case 'up':
-                if(nowIndex>0){
-                    nowIndex--;
-                    move(nowIndex);
+        //函数反抖  防止函数被多次调用执行，此功能在函数被多次调用的情况下，只执行最后一次调用
+        clearTimeout(wheelTimer);
+        wheelTimer=setTimeout(function () {
+            if(event.wheelDelta){
+                //IE chrome
+                if(event.wheelDelta>0){
+                    flag='up';
+                }else {
+                    flag='down';
                 }
-                break;
-            case 'down':
-                if(nowIndex<4){
-                    nowIndex++;
-                    move(nowIndex);
+            } else if(event.detail){
+                //firefox
+                if(event.detail<0){
+                    flag='up';
+                }else {
+                    flag='down';
                 }
-                break;
-        }
+            }
+            switch (flag){
+                case 'up':
+                    if(nowIndex>0){
+                        nowIndex--;
+                        move(nowIndex);
+                    }
+                    break;
+                case 'down':
+                    if(nowIndex<4){
+                        nowIndex++;
+                        move(nowIndex);
+                    }
+                    break;
+            }
+        },200);
+        //禁止浏览器默认行为
+        event.preventDefault && event.preventDefault();
+        return false;
+    }
+
+    //浏览器窗口大小调整事件
+    window.onresize=function () {
+        arrow.style.left=headerLiNodes[nowIndex].getBoundingClientRect().left+headerLiNodes[nowIndex].offsetWidth/2-arrowHalfWidth+'px';
+        contentUlNode.style.top=-nowIndex*content.offsetHeight+'px';
     }
 };
