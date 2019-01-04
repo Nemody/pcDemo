@@ -98,3 +98,20 @@ img{display: block;}
     margin-left: -550px;
     background: lightblue;
 }
+.rightFlags{
+    position: fixed;
+    right: 10px;
+    top: 50%;
+}
+.rightFlags li{
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    margin-bottom: 5px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+}
+.rightFlags li.active{
+    background: #fff;
+}
