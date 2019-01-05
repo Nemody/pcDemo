@@ -1,7 +1,8 @@
 /**
  * Created by Nemoo on 2019/1/4.
  */
-window.onload=function (event) {
+window.addEventListener('DOMContentLoaded',function (event) {
+
     //获取头部DOM对象
     var headerLiNodes=document.querySelectorAll('.navList li');
     var arrow=document.querySelector('.arrow');
@@ -11,6 +12,12 @@ window.onload=function (event) {
     var content=document.querySelector('.content');
     //获取右部小圆点DOM对象
     var olLiNodes=document.querySelectorAll('.rightFlags li');
+    //获取第一屏DOM对象
+    var bannerLiNodes=document.querySelectorAll('.banner li');
+    var bannerBarLiNodes=document.querySelectorAll('.bannerBar li');
+    //获取home的DOM对象
+    var homeNode=document.querySelector('.home');
+    //变量定义区
     var nowIndex=0;
     var wheelTimer=0;
     var arrowHalfWidth=arrow.offsetWidth/2;
@@ -102,4 +109,70 @@ window.onload=function (event) {
         arrow.style.left=headerLiNodes[nowIndex].getBoundingClientRect().left+headerLiNodes[nowIndex].offsetWidth/2-arrowHalfWidth+'px';
         contentUlNode.style.top=-nowIndex*content.offsetHeight+'px';
     }
-};
+
+    //第一屏动画
+    firstViewHandle();
+    function firstViewHandle() {
+
+        var lastIndex=0;
+        var nowIndex=0;
+        var lastTime=0;
+        var timer=0;
+
+        for (var i = 0; i < bannerBarLiNodes.length; i++) {
+            bannerBarLiNodes[i].index=i;
+            bannerBarLiNodes[i].onclick=function () {
+                //判断两次点击的间隔时间
+                var nowTime=Date.now();
+                if (nowTime - lastTime < 2000) return;
+                lastTime=nowTime;
+                //同步nowIndex
+                nowIndex=this.index;
+                if(nowIndex===lastIndex) return;
+
+                if(nowIndex>lastIndex){
+                    //点击的是右边的小圆点
+                    bannerLiNodes[nowIndex].className='common-title right-show';
+                    bannerLiNodes[lastIndex].className='common-title left-hide';
+
+                } else if(nowIndex<lastIndex){
+                    //点击的是左边的小圆点
+                    bannerLiNodes[nowIndex].className='common-title left-show';
+                    bannerLiNodes[lastIndex].className='common-title right-hide';
+                }
+
+                //清除上一次点击的小圆点的效果
+                bannerBarLiNodes[lastIndex].className='';
+                //点击谁谁变成白色
+                this.className='active';
+
+                //每一次点击后将本次下标同步至lastIndex,以便于下次点击时保持同步
+                lastIndex=nowIndex;
+            };
+        }
+        homeNode.onmouseenter=function () {
+            clearInterval(timer);
+        }
+        homeNode.onmouseleave=autoPlay;
+
+        //自动轮播
+        autoPlay();
+        function autoPlay() {
+            timer=setInterval(function () {
+                nowIndex++;
+                if(nowIndex>=4){
+                    nowIndex=0;
+                }
+                bannerLiNodes[nowIndex].className='common-title right-show';
+                bannerLiNodes[lastIndex].className='common-title left-hide';
+                //清除上一次小圆点的效果
+                bannerBarLiNodes[lastIndex].className='';
+                bannerBarLiNodes[nowIndex].className='active';
+
+                //每一次将下标同步至lastIndex,以便于下次保持同步
+                lastIndex=nowIndex;
+            },2500);
+        }
+
+    }
+});

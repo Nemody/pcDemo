@@ -1,60 +1,105 @@
 /*初始化css样式*/
-html,body{height: 100%;overflow: hidden;}
-html,body,h1,h2,h3,h4,h5,h6,p,ul,li{margin: 0px;padding: 0px;font: 14px "微软雅黑";}
-a{text-decoration: none;display: block;}
-li{list-style: none;}
-img{display: block;}
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+html, body, h1, h2, h3, h4, h5, h6, p, ul, li {
+    margin: 0px;
+    padding: 0px;
+    font: 14px "微软雅黑";
+}
+
+a {
+    text-decoration: none;
+    display: block;
+}
+
+li {
+    list-style: none;
+}
+
+img {
+    display: block;
+}
 
 /*清除浮动*/
-.clearfix{*zoom: 1;}
-.clearfix:after{content: "";display: block;clear: both;}
+.clearfix {
+    *zoom: 1;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/*公共样式*/
+.common-title {
+    color: #009ee0;
+    font-size: 80px;
+    line-height: 0.8;
+    font-weight: bold;
+    letter-spacing: -5px;
+}
 
 /*正常样式*/
-#wrap{
+#wrap {
     height: 100%;
     position: relative;
 }
-.header{
+
+.header {
     position: relative;
 }
-.header-main{
+
+.header-main {
     width: 1100px;
     height: 80px;
     margin: 0 auto;
     background: lightyellow;
 }
-.logo{
+
+.logo {
     float: left;
-    margin-top:15px;
+    margin-top: 15px;
 }
-.music-icon{
+
+.music-icon {
     float: left;
     margin-top: 50px;
 }
-.navList{
+/*头部右侧导航区*/
+.navList {
     float: right;
     margin-top: 50px;
 }
-.navList li{
+
+.navList li {
     position: relative;
     float: left;
-    margin-left:40px;
+    margin-left: 40px;
     color: #009EE0;
     cursor: pointer;
 }
-.navList li:hover .down{
+.navList li:first-child{
+    width: 18px;
+}
+.navList li:hover .down {
     width: 100%;
 }
-.navList li .down{
+
+.navList li .down {
     color: #000;
     position: absolute;
-    left:0;
+    left: 0;
     top: 0;
     width: 0;
     overflow: hidden;
     transition: width 1s;
 }
-.arrow{
+/*小箭头区域*/
+.arrow {
     width: 21px;
     height: 11px;
     background-image: url("../img/arrow.png");
@@ -65,8 +110,8 @@ img{display: block;}
     transition: left 1s;
     z-index: 10;
 }
-
-.content{
+/*内容区*/
+.content {
     position: absolute;
     top: 80px;
     left: 0;
@@ -74,7 +119,8 @@ img{display: block;}
     bottom: 0;
     overflow: hidden;
 }
-.content-main{
+/*主体内容区*/
+.content-main {
     height: 500%;
     width: 100%;
     position: absolute;
@@ -82,36 +128,152 @@ img{display: block;}
     top: 0;
     transition: top 1s;
 }
-.content-main>li{
+.content-main > li {
     position: relative;
     height: 20%;
     width: 100%;
-    background: yellowgreen;
+    background-repeat: no-repeat;
 }
-.content-main section{
+/*设置各屏的背景图*/
+.content-main > li:nth-child(1){
+    background-image: url("../img/bg1.jpg");
+}
+.content-main > li:nth-child(2){
+    background-image: url("../img/bg2.jpg");
+}
+.content-main > li:nth-child(3){
+    background-image: url("../img/bg3.jpg");
+}
+.content-main > li:nth-child(4){
+     background-image: url("../img/bg4.jpg");
+ }
+.content-main > li:nth-child(5){
+    background-image: url("../img/bg5.jpg");
+}
+
+/*设置section区域样式*/
+.content-main section {
     width: 1100px;
     height: 520px;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top:-260px;
+    margin-top: -260px;
     margin-left: -550px;
-    background: lightblue;
 }
-.rightFlags{
+/*轮播图部分*/
+.banner{
+    height: 100%;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+.banner li {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    text-align: center;
+    line-height: 520px;
+    visibility: hidden;
+}
+.banner li.active{
+    visibility: visible;
+}
+.banner li.left-hide{
+    visibility: hidden;
+    animation: leftHide 2s linear;
+}
+.banner li.right-show{
+    visibility: visible;
+    animation: rightShow 2s linear;
+}
+.banner li.left-show{
+    visibility: visible;
+    animation: leftShow 2s linear;
+}
+.banner li.right-hide{
+    visibility: hidden;
+    animation: rightHide 2s linear;
+}
+/*第一屏动画效果实现部分*/
+/*右边显示，左边隐藏*/
+@keyframes leftHide {
+    0%{visibility: hidden;}
+    50%{transform: translateX(-40%) rotateY(30deg) scale(0.8);}
+    100%{transform: translateZ(-200px);visibility: visible;}
+}
+@keyframes rightShow {
+    0%{visibility: visible;  transform: translateZ(-200px); }
+    50%{transform: translateX(40%) rotateY(-30deg) scale(0.8); }
+    100%{visibility: hidden;}
+}
+/*左边显示，右边隐藏*/
+@keyframes leftShow {
+    0%{transform: translateZ(-200px);visibility: visible;}
+    50%{transform: translateX(-40%) rotateY(30deg) scale(0.8);}
+    100%{visibility: hidden}
+}
+@keyframes rightHide {
+    0%{visibility: hidden}
+    50%{transform: translateX(40%) rotateY(-30deg) scale(0.8); }
+    100%{visibility: visible;  transform: translateZ(-200px); }
+}
+
+
+.banner li:nth-child(1) {
+    background: #dc6c5f;
+}
+
+.banner li:nth-child(2) {
+    background: #95dc84;
+}
+
+.banner li:nth-child(3) {
+    background: #64b9d2;
+}
+
+.banner li:nth-child(4) {
+    background: #000000;
+}
+/*轮播图小圆点部分*/
+.bannerBar {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 0);
+}
+.bannerBar li {
+    float: left;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    margin: 2px;
+    box-shadow: 0 0 4px rgba(25, 25, 25, 0.8);
+    border-radius: 50%;
+    text-align: center;
+}
+.bannerBar li.active{
+    background: #fff;
+}
+/*右侧小圆点区域*/
+.rightFlags {
     position: fixed;
     right: 10px;
     top: 50%;
-    transform: translate(0,-50%);
+    transform: translate(0, -50%);
 
 }
-.rightFlags li{
+
+.rightFlags li {
     width: 15px;
     height: 15px;
     margin-top: 10px;
     border-radius: 50%;
     border: 1px solid #fff;
 }
-.rightFlags li.active{
+
+.rightFlags li.active {
     background: #fff;
 }
