@@ -43,6 +43,12 @@ img {
     letter-spacing: -5px;
 }
 
+.common-text {
+    color: white;
+    line-height: 1.5;
+    font-size: 15px;
+}
+
 /*正常样式*/
 #wrap {
     height: 100%;
@@ -69,6 +75,7 @@ img {
     float: left;
     margin-top: 50px;
 }
+
 /*头部右侧导航区*/
 .navList {
     float: right;
@@ -82,9 +89,11 @@ img {
     color: #009EE0;
     cursor: pointer;
 }
-.navList li:first-child{
+
+.navList li:first-child {
     width: 18px;
 }
+
 .navList li:hover .down {
     width: 100%;
 }
@@ -98,6 +107,7 @@ img {
     overflow: hidden;
     transition: width 1s;
 }
+
 /*小箭头区域*/
 .arrow {
     width: 21px;
@@ -110,6 +120,7 @@ img {
     transition: left 1s;
     z-index: 10;
 }
+
 /*内容区*/
 .content {
     position: absolute;
@@ -119,6 +130,7 @@ img {
     bottom: 0;
     overflow: hidden;
 }
+
 /*主体内容区*/
 .content-main {
     height: 500%;
@@ -128,26 +140,32 @@ img {
     top: 0;
     transition: top 1s;
 }
+
 .content-main > li {
     position: relative;
     height: 20%;
     width: 100%;
     background-repeat: no-repeat;
 }
+
 /*设置各屏的背景图*/
-.content-main > li:nth-child(1){
+.content-main > li:nth-child(1) {
     background-image: url("../img/bg1.jpg");
 }
-.content-main > li:nth-child(2){
+
+.content-main > li:nth-child(2) {
     background-image: url("../img/bg2.jpg");
 }
-.content-main > li:nth-child(3){
+
+.content-main > li:nth-child(3) {
     background-image: url("../img/bg3.jpg");
 }
-.content-main > li:nth-child(4){
-     background-image: url("../img/bg4.jpg");
- }
-.content-main > li:nth-child(5){
+
+.content-main > li:nth-child(4) {
+    background-image: url("../img/bg4.jpg");
+}
+
+.content-main > li:nth-child(5) {
     background-image: url("../img/bg5.jpg");
 }
 
@@ -160,13 +178,16 @@ img {
     left: 50%;
     margin-top: -260px;
     margin-left: -550px;
+    /*background: #fff;*/
 }
+
 /*轮播图部分*/
-.banner{
+.banner {
     height: 100%;
     transform-style: preserve-3d;
     perspective: 1000px;
 }
+
 .banner li {
     position: absolute;
     left: 0;
@@ -178,49 +199,85 @@ img {
     line-height: 520px;
     visibility: hidden;
 }
-.banner li.active{
+
+.banner li.active {
     visibility: visible;
 }
-.banner li.left-hide{
+
+.banner li.left-hide {
     visibility: hidden;
     animation: leftHide 2s linear;
 }
-.banner li.right-show{
+
+.banner li.right-show {
     visibility: visible;
     animation: rightShow 2s linear;
 }
-.banner li.left-show{
+
+.banner li.left-show {
     visibility: visible;
     animation: leftShow 2s linear;
 }
-.banner li.right-hide{
+
+.banner li.right-hide {
     visibility: hidden;
     animation: rightHide 2s linear;
 }
+
 /*第一屏动画效果实现部分*/
 /*右边显示，左边隐藏*/
 @keyframes leftHide {
-    0%{visibility: visible;}
-    50%{transform: translateX(-40%) rotateY(30deg) scale(0.8);}
-    100%{transform: translateZ(-200px);visibility: hidden;}
-}
-@keyframes rightShow {
-    0%{visibility: hidden;  transform: translateZ(-200px); }
-    50%{transform: translateX(40%) rotateY(-30deg) scale(0.8); }
-    100%{visibility: visible;}
-}
-/*左边显示，右边隐藏*/
-@keyframes leftShow {
-    0%{transform: translateZ(-200px);visibility: hidden;}
-    50%{transform: translateX(-40%) rotateY(30deg) scale(0.8);}
-    100%{visibility: visible}
-}
-@keyframes rightHide {
-    0%{visibility: visible}
-    50%{transform: translateX(40%) rotateY(-30deg) scale(0.8); }
-    100%{visibility: hidden;  transform: translateZ(-200px); }
+    0% {
+        visibility: visible;
+    }
+    50% {
+        transform: translateX(-40%) rotateY(30deg) scale(0.8);
+    }
+    100% {
+        transform: translateZ(-200px);
+        visibility: hidden;
+    }
 }
 
+@keyframes rightShow {
+    0% {
+        visibility: hidden;
+        transform: translateZ(-200px);
+    }
+    50% {
+        transform: translateX(40%) rotateY(-30deg) scale(0.8);
+    }
+    100% {
+        visibility: visible;
+    }
+}
+
+/*左边显示，右边隐藏*/
+@keyframes leftShow {
+    0% {
+        transform: translateZ(-200px);
+        visibility: hidden;
+    }
+    50% {
+        transform: translateX(-40%) rotateY(30deg) scale(0.8);
+    }
+    100% {
+        visibility: visible
+    }
+}
+
+@keyframes rightHide {
+    0% {
+        visibility: visible
+    }
+    50% {
+        transform: translateX(40%) rotateY(-30deg) scale(0.8);
+    }
+    100% {
+        visibility: hidden;
+        transform: translateZ(-200px);
+    }
+}
 
 .banner li:nth-child(1) {
     background: #dc6c5f;
@@ -237,6 +294,7 @@ img {
 .banner li:nth-child(4) {
     background: #000000;
 }
+
 /*轮播图小圆点部分*/
 .bannerBar {
     position: absolute;
@@ -244,6 +302,7 @@ img {
     bottom: 0;
     transform: translate(-50%, 0);
 }
+
 .bannerBar li {
     float: left;
     width: 20px;
@@ -254,9 +313,147 @@ img {
     border-radius: 50%;
     text-align: center;
 }
-.bannerBar li.active{
+
+.bannerBar li.active {
     background: #fff;
 }
+
+/*第二屏样式*/
+.content-main li:nth-child(2){
+    overflow: hidden;
+}
+.course{
+    position: relative;
+
+}
+.course-title{
+    margin: 50px;
+}
+.course-text{
+    position: relative;
+    z-index: 1;
+    width: 400px;
+    margin-left: 50px;
+}
+.course-photo{
+    position: absolute;
+    width: 480px;
+    right: 50px;
+    top: 70px;
+    z-index: 1;
+}
+.course-photo li{
+    width: 120px;
+    height: 132px;
+    float: left;
+    position: relative;
+}
+.front{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 120px;
+    height: 132px;
+    background-image: url("../img/pcwelt.png");
+    background-repeat: no-repeat;
+    background-position:center center;
+    transition: transform 2s;
+    backface-visibility: hidden;
+}
+.back{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 120px;
+    height: 132px;
+    background: red;
+    transform: rotateY(180deg);
+    transition: transform 2s;
+    backface-visibility: hidden;
+}
+.course-photo li:hover .front{
+    transition: 2s;
+    transform: rotateY(180deg);
+}
+.course-photo li:hover .back{
+    transition: 2s;
+    transform: rotateY(360deg);
+}
+
+.line{
+    position: absolute;
+    top:65px;
+    width: 9px;
+    height: 410px;
+    background-image: url("../img/plus_row.png");
+    background-repeat: no-repeat;
+}
+.line:nth-child(1){right: 45px;}
+.line:nth-child(2){right: 165px;}
+.line:nth-child(3){right: 285px;}
+.line:nth-child(4){right: 405px;}
+.line:nth-child(5){right: 525px;}
+
+/*纸飞机部分*/
+.plane1{
+    position: absolute;
+    left: 300px;
+    top: -100px;
+    width: 359px;
+    height: 283px;
+    transform: translate(0px,0px);
+}
+.plane2{
+    position: absolute;
+    left: -100px;
+    top: 200px;
+    width: 309px;
+    height: 249px;
+    transform: translate(0px,0px);
+}
+.plane3{
+    position: absolute;
+    left: 300px;
+    top: 400px;
+    width: 230px;
+    height: 182px;
+    transform: translate(0px,0px);
+}
+.works-robot{
+    animation: robotMove 2s linear infinite alternate-reverse;
+
+}
+@keyframes robotMove {
+    0%{
+        transform: translateX(0px);
+    }
+    100%{
+        transform: translateX(-400px);
+    }
+}
+
+/*第三屏样式*/
+.works{
+    position: relative;
+}
+.works-title{
+    margin: 50px 0 100px 50px;
+}
+.works-photo{
+    margin-left: 50px;
+}
+.works-photo li{
+    float: left;
+    margin-left: 1px;
+}
+.works-robot{
+    position: absolute;
+    left:900px;
+    top: 170px;
+    width: 167px;
+    height: 191px;
+}
+
 /*右侧小圆点区域*/
 .rightFlags {
     position: fixed;
