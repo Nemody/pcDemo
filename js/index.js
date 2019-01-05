@@ -19,6 +19,10 @@ window.addEventListener('DOMContentLoaded',function (event) {
     var homeNode = document.querySelector('.home');
     //获取第二屏DOM对象
     var planeNodes = document.querySelectorAll('.course img');
+    //获取第三屏DOM对象
+    var photoLiNodes=document.querySelectorAll('.works-photo li');
+    var maskNodes=document.querySelectorAll('.works-photo .mask');
+    var maskIconNodes=document.querySelectorAll('.mask-icon');
 
     //变量定义区
     var nowIndex = 0;
@@ -50,6 +54,7 @@ window.addEventListener('DOMContentLoaded',function (event) {
         arrow.style.left = headerLiNodes[nowIndex].getBoundingClientRect().left + headerLiNodes[nowIndex].offsetWidth / 2 - arrowHalfWidth + 'px';
         contentUlNode.style.top = -nowIndex * content.offsetHeight + 'px';
     };
+
     //右侧小圆点点击效果
     rightHandle();
     function rightHandle() {
@@ -164,6 +169,9 @@ window.addEventListener('DOMContentLoaded',function (event) {
         function autoPlay() {
             timer = setInterval(function () {
                 nowIndex++;
+                //为了保证在自动轮播时用户不可以点击切换，因此同步时间为当前时间
+                //使得用户点击时不满足2s的条件从而不能点击
+                lastTime=Date.now();
                 if (nowIndex >= 4) {
                     nowIndex = 0;
                 }
@@ -183,6 +191,11 @@ window.addEventListener('DOMContentLoaded',function (event) {
     //第二屏动画
     secondViewHandle();
     function secondViewHandle() {
+
+    }
+    //第三屏动画
+    thirdViewHandle();
+    function thirdViewHandle() {
 
     }
 
