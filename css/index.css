@@ -200,25 +200,25 @@ img {
 /*第一屏动画效果实现部分*/
 /*右边显示，左边隐藏*/
 @keyframes leftHide {
-    0%{visibility: hidden;}
+    0%{visibility: visible;}
     50%{transform: translateX(-40%) rotateY(30deg) scale(0.8);}
-    100%{transform: translateZ(-200px);visibility: visible;}
+    100%{transform: translateZ(-200px);visibility: hidden;}
 }
 @keyframes rightShow {
-    0%{visibility: visible;  transform: translateZ(-200px); }
+    0%{visibility: hidden;  transform: translateZ(-200px); }
     50%{transform: translateX(40%) rotateY(-30deg) scale(0.8); }
-    100%{visibility: hidden;}
+    100%{visibility: visible;}
 }
 /*左边显示，右边隐藏*/
 @keyframes leftShow {
-    0%{transform: translateZ(-200px);visibility: visible;}
+    0%{transform: translateZ(-200px);visibility: hidden;}
     50%{transform: translateX(-40%) rotateY(30deg) scale(0.8);}
-    100%{visibility: hidden}
+    100%{visibility: visible}
 }
 @keyframes rightHide {
-    0%{visibility: hidden}
+    0%{visibility: visible}
     50%{transform: translateX(40%) rotateY(-30deg) scale(0.8); }
-    100%{visibility: visible;  transform: translateZ(-200px); }
+    100%{visibility: hidden;  transform: translateZ(-200px); }
 }
 
 
