@@ -63,7 +63,6 @@ img {
     width: 1100px;
     height: 80px;
     margin: 0 auto;
-    background: lightyellow;
 }
 
 .logo {
@@ -331,7 +330,7 @@ img {
 }
 .course-text{
     position: relative;
-    z-index: 1;
+    z-index: 5;
     width: 400px;
     margin-left: 50px;
 }
@@ -340,7 +339,7 @@ img {
     width: 480px;
     right: 50px;
     top: 70px;
-    z-index: 1;
+    z-index: 5;
 }
 .course-photo li{
     width: 120px;
@@ -366,7 +365,7 @@ img {
     top: 0;
     width: 120px;
     height: 132px;
-    background: red;
+    background: #009ee0;
     transform: rotateY(180deg);
     transition: transform 2s;
     backface-visibility: hidden;
@@ -430,6 +429,8 @@ img {
 }
 .works-photo{
     margin-left: 50px;
+    position: relative;
+    z-index: 5;
 }
 .works-photo li{
     float: left;
@@ -497,6 +498,115 @@ img {
         transform: rotateY(180deg);
     }
 }
+.pencel1{
+    position: absolute;
+    left:500px;
+    top: 0px;
+    width: 180px;
+    height: 79px;
+    transform: translate(0px,0px);
+}
+.pencel2{
+    position: absolute;
+    left: 300px;
+    top: 250px;
+    width: 268px;
+    height: 38px;
+    transform: translate(0px,0px);
+}
+.pencel3{
+    position: absolute;
+    left: 650px;
+    top: 300px;
+    width: 441px;
+    height: 231px;
+    transform: translate(0px,0px);
+}
+
+/*第四屏样式*/
+.about{
+    position: relative;
+}
+.about-title{
+    margin: 50px 0 100px 50px;
+}
+.about-text{
+    width: 400px;
+    margin-left: 50px;
+}
+.about-photo{
+    position: absolute;
+    width: 260px;
+    height: 200px;
+    border: 5px solid rgba(255,255,255,0.5);
+    border-radius: 8px;
+    background-repeat: no-repeat;
+    z-index: 5;
+}
+.about-photo1{
+    left:750px;
+    top:50px;
+    background-image: url("../img/about2.jpg");
+}
+.about-photo2{
+    left:600px;
+    top:290px;
+    background-image: url("../img/about4.jpg");
+}
+.about-photo li{
+    float: left;
+    width: 130px;
+    height: 100px;
+    overflow: hidden;
+}
+.about-photo div{
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    transition: transform 1s;
+}
+.about-photo1 div{
+    background-image: url("../img/about1.jpg");
+}
+.about-photo2 div{
+    background-image: url("../img/about3.jpg");
+}
+.about-photo .leftTop{
+    background-position: 0px 0px;
+}
+.about-photo .rightTop{
+    background-position: -130px 0px;
+}
+.about-photo .leftBottom{
+    background-position: 0px -100px;
+}
+.about-photo .rightBottom{
+    background-position: -130px -100px;
+}
+.about-photo:hover .leftTop{
+    transform: translateY(100px);
+}
+.about-photo:hover .rightTop{
+    transform: translateX(-130px);
+}
+.about-photo:hover .leftBottom{
+    transform: translateX(130px);
+}
+.about-photo:hover .rightBottom{
+    transform: translateY(-100px);
+}
+.greenLine{
+    position: absolute;
+    left: 555px;
+    top: -12px;
+    width: 357px;
+    height: 998px;
+}
+
+
+
+
+
 /*右侧小圆点区域*/
 .rightFlags {
     position: fixed;

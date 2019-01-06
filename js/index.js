@@ -23,6 +23,9 @@ window.addEventListener('DOMContentLoaded',function (event) {
     var photoLiNodes=document.querySelectorAll('.works-photo li');
     var maskNodes=document.querySelectorAll('.works-photo .mask');
     var maskIconNodes=document.querySelectorAll('.mask-icon');
+    //获取第五屏DOM对象
+    var teamUlNode=document.querySelector('.team-photo');
+    var teamLiNodes=document.querySelectorAll('.team-photo li');
 
     //变量定义区
     var nowIndex = 0;
