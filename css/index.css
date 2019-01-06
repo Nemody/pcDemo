@@ -627,11 +627,13 @@ img {
     height: 448px;
 }
 .team-photo li{
+    position: relative;
     float: left;
     width: 236px;
     height: 100%;
     background-image: url("../img/team.png");
     background-repeat: no-repeat;
+    overflow: hidden;
 }
 
 .team-photo li:nth-child(1){
@@ -646,7 +648,22 @@ img {
 .team-photo li:nth-child(4){
     background-position: -710px 0px;
 }
-
+.team-bubble{
+    position: absolute;
+    left: 50%;
+    top: 448px;
+    margin-left: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: red;
+    /*display: none;*/
+    z-index: 5;
+}
+.test{
+    position: absolute;
+    border: 1px solid #000;
+}
 
 
 /*右侧小圆点区域*/

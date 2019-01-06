@@ -26,7 +26,8 @@ window.addEventListener('DOMContentLoaded',function (event) {
     //获取第五屏DOM对象
     var teamUlNode=document.querySelector('.team-photo');
     var teamLiNodes=document.querySelectorAll('.team-photo li');
-
+    var teamBubbleNodes=document.querySelectorAll('.team-bubble');
+    var teamTimer=0;
     //变量定义区
     var nowIndex = 0;
     var wheelTimer = 0;
@@ -205,22 +206,44 @@ window.addEventListener('DOMContentLoaded',function (event) {
     //第五屏动画
     fifthViewHandle();
     function fifthViewHandle() {
+
         for (var i = 0; i < teamLiNodes.length; i++) {
-            // teamLiNodes[i].index=i;
+            teamLiNodes[i].index=i;
             teamLiNodes[i].onmouseenter=function () {
                 //实现鼠标移入li时，当前li变亮，其余li改变透明度
                 for (var j = 0; j < teamLiNodes.length; j++) {
                     teamLiNodes[j].style.opacity='0.5';
                 }
                 this.style.opacity='1';
-
                 //曲线运动  sin函数运动
+                teamBubbleNodes[this.index].style.display='block';
+                var deg=0;
+                var num=100;
+                //获取初始的left和top值
+                var lastLeft=teamBubbleNodes[this.index].offsetLeft;
+                var lastTop=teamBubbleNodes[this.index].offsetTop;
+                //利用一个变量存储当前的索引下标值
+                var nowIndex=0;
+                nowIndex=this.index;
+                teamTimer=setInterval(function () {
+                    deg++;
+                    //给气泡赋新的left和top值
+                    var nowLeft=lastLeft+Math.sin(deg*Math.PI/180)*num*0.9;
+                    var nowTop=lastTop-deg*Math.PI/180*num*0.5;
+                    teamBubbleNodes[nowIndex].style.left=nowLeft+'px';
+                    teamBubbleNodes[nowIndex].style.top=nowTop+'px';
+                },10)
+
             };
             teamLiNodes[i].onmouseleave=function () {
                 //实现鼠标移出li时，所有li恢复透明度为1
                 for (var j = 0; j < teamLiNodes.length; j++) {
                     teamLiNodes[j].style.opacity='1';
                 }
+                teamBubbleNodes[this.index].style.display='none';
+                teamBubbleNodes[this.index].style.top='448px';
+                teamBubbleNodes[this.index].style.left='108px';
+                clearInterval(teamTimer);
             };
         }
     }
