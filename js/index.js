@@ -202,4 +202,26 @@ window.addEventListener('DOMContentLoaded',function (event) {
 
     }
 
+    //第五屏动画
+    fifthViewHandle();
+    function fifthViewHandle() {
+        for (var i = 0; i < teamLiNodes.length; i++) {
+            // teamLiNodes[i].index=i;
+            teamLiNodes[i].onmouseenter=function () {
+                //实现鼠标移入li时，当前li变亮，其余li改变透明度
+                for (var j = 0; j < teamLiNodes.length; j++) {
+                    teamLiNodes[j].style.opacity='0.5';
+                }
+                this.style.opacity='1';
+
+                //曲线运动  sin函数运动
+            };
+            teamLiNodes[i].onmouseleave=function () {
+                //实现鼠标移出li时，所有li恢复透明度为1
+                for (var j = 0; j < teamLiNodes.length; j++) {
+                    teamLiNodes[j].style.opacity='1';
+                }
+            };
+        }
+    }
 });

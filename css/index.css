@@ -603,7 +603,49 @@ img {
     height: 998px;
 }
 
+/*第五屏样式*/
+.team{
+    position: relative;
+}
+.team-title{
+    margin: 50px;
+    width: 400px;
+}
+.team-text{
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 50px;
+    width: 400px;
+}
+.team-photo{
+    position: absolute;
+    top: 230px;
+    left: 50%;
+    margin-left: -472px;
+    width: 944px;
+    height: 448px;
+}
+.team-photo li{
+    float: left;
+    width: 236px;
+    height: 100%;
+    background-image: url("../img/team.png");
+    background-repeat: no-repeat;
+}
 
+.team-photo li:nth-child(1){
+    background-position: 3px 0px;
+}
+.team-photo li:nth-child(2){
+    background-position:-230px 0px;
+}
+.team-photo li:nth-child(3){
+    background-position: -483px 0px;
+}
+.team-photo li:nth-child(4){
+    background-position: -710px 0px;
+}
 
 
 
