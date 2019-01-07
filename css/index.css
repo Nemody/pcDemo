@@ -571,23 +571,24 @@ img {
 .about-photo2 div{
     background-image: url("../img/about3.jpg");
 }
-.about-photo .leftTop{
+.leftTop{
     background-position: 0px 0px;
 }
-.about-photo .rightTop{
+.rightTop{
     background-position: -130px 0px;
 }
-.about-photo .leftBottom{
+.leftBottom{
     background-position: 0px -100px;
 }
-.about-photo .rightBottom{
+.rightBottom{
     background-position: -130px -100px;
 }
 .about-photo:hover .leftTop{
     transform: translateY(100px);
 }
 .about-photo:hover .rightTop{
-    transform: translateX(-130px);
+    /*多加1px是为了解决图片溢出隐藏之后出现一条小白线的问题*/
+    transform: translateX(-131px);
 }
 .about-photo:hover .leftBottom{
     transform: translateX(130px);
@@ -648,23 +649,10 @@ img {
 .team-photo li:nth-child(4){
     background-position: -710px 0px;
 }
-.team-bubble{
+.myCanvas{
     position: absolute;
-    left: 50%;
-    top: 448px;
-    margin-left: -10px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: red;
-    /*display: none;*/
-    z-index: 5;
+    top: 0;
 }
-.test{
-    position: absolute;
-    border: 1px solid #000;
-}
-
 
 /*右侧小圆点区域*/
 .rightFlags {

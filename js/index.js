@@ -26,8 +26,9 @@ window.addEventListener('DOMContentLoaded',function (event) {
     //获取第五屏DOM对象
     var teamUlNode=document.querySelector('.team-photo');
     var teamLiNodes=document.querySelectorAll('.team-photo li');
-    var teamBubbleNodes=document.querySelectorAll('.team-bubble');
-    var teamTimer=0;
+    var myCanvas=null;
+    var createTimer=null;
+    var paintingTimer=null;
     //变量定义区
     var nowIndex = 0;
     var wheelTimer = 0;
@@ -192,20 +193,13 @@ window.addEventListener('DOMContentLoaded',function (event) {
 
     }
 
-    //第二屏动画
-    secondViewHandle();
-    function secondViewHandle() {
 
-    }
-    //第三屏动画
-    thirdViewHandle();
-    function thirdViewHandle() {
-
-    }
 
     //第五屏动画
     fifthViewHandle();
     function fifthViewHandle() {
+        var width=teamLiNodes[0].offsetWidth;
+        var height=teamLiNodes[0].offsetHeight;
 
         for (var i = 0; i < teamLiNodes.length; i++) {
             teamLiNodes[i].index=i;
@@ -215,35 +209,93 @@ window.addEventListener('DOMContentLoaded',function (event) {
                     teamLiNodes[j].style.opacity='0.5';
                 }
                 this.style.opacity='1';
-                //曲线运动  sin函数运动
-                teamBubbleNodes[this.index].style.display='block';
-                var deg=0;
-                var num=100;
-                //获取初始的left和top值
-                var lastLeft=teamBubbleNodes[this.index].offsetLeft;
-                var lastTop=teamBubbleNodes[this.index].offsetTop;
-                //利用一个变量存储当前的索引下标值
-                var nowIndex=0;
-                nowIndex=this.index;
-                teamTimer=setInterval(function () {
-                    deg++;
-                    //给气泡赋新的left和top值
-                    var nowLeft=lastLeft+Math.sin(deg*Math.PI/180)*num*0.9;
-                    var nowTop=lastTop-deg*Math.PI/180*num*0.5;
-                    teamBubbleNodes[nowIndex].style.left=nowLeft+'px';
-                    teamBubbleNodes[nowIndex].style.top=nowTop+'px';
-                },10)
+                //创建canvas
+                //判断当前是否有canvas存在，若有，则不必重新创建
+                if(!myCanvas){
+                    myCanvas=document.createElement('canvas');
+                    myCanvas.width=width;
+                    myCanvas.height=height;
+                    myCanvas.className='myCanvas';
+                    bubble(myCanvas);
+                    teamUlNode.appendChild(myCanvas);
+                }
+                myCanvas.style.left=this.index*width+'px';
 
             };
-            teamLiNodes[i].onmouseleave=function () {
+            teamUlNode.onmouseleave=function () {
                 //实现鼠标移出li时，所有li恢复透明度为1
                 for (var j = 0; j < teamLiNodes.length; j++) {
                     teamLiNodes[j].style.opacity='1';
                 }
-                teamBubbleNodes[this.index].style.display='none';
-                teamBubbleNodes[this.index].style.top='448px';
-                teamBubbleNodes[this.index].style.left='108px';
-                clearInterval(teamTimer);
+                //删除画布，并且初始化画布
+                myCanvas.remove();
+                myCanvas=null;
+                //关闭定时器
+                clearInterval(createTimer);
+                clearInterval(paintingTimer);
+            };
+        }
+
+        //封装气泡曲线运动函数
+        function bubble(canvas) {
+            if (myCanvas.getContext){
+                //创建画笔
+                var painting=myCanvas.getContext('2d');
+                //获取画布的尺寸
+                var canvasWidth=myCanvas.width;
+                var canvasHeight=myCanvas.height;
+
+                //随机生成多个气泡，存储在数组中
+                var bubbleArr=[];
+                createTimer=setInterval(function () {
+                    //生成随机的颜色
+                    var r=Math.round(Math.random()*255);
+                    var g=Math.round(Math.random()*255);
+                    var b=Math.round(Math.random()*255);
+                    //生成随机的半径
+                    var c_r=Math.round(Math.random()*8+2);
+                    //生成随机的起始位置
+                    var x=Math.round(Math.random()*canvasWidth);
+                    var y=canvasHeight+c_r;
+                    //生成一个随机的系数，用于扩大气泡的运动轨迹
+                    var scale=Math.round(Math.random()*20+30);
+                    //将生成的圆的各项参数存放在数组中
+                    bubbleArr.push({
+                        r:r,
+                        g:g,
+                        b:g,
+                        c_r:c_r,
+                        x:x,
+                        y:y,
+                        deg:0,
+                        scale:scale
+                    });
+                },40);
+                //画圆
+                paintingTimer=setInterval(function () {
+                    //清除画布
+                    painting.clearRect(0,0,canvasWidth,canvasHeight);
+
+                    for (var i = 0; i < bubbleArr.length; i++) {
+                        var item=bubbleArr[i];
+                        //角度自增
+                        item.deg+=6;
+                        var rad=item.deg*Math.PI/180;
+                        //计算气泡的位置
+                        var y=Math.round(item.y-rad*item.scale);
+                        var x=Math.round(item.x+Math.sin(rad)*item.scale);
+                        //当气泡移动出画布外，则清除该气泡，并跳出本次循环，不再执行下方的代码
+                        if(y<=0){
+                            bubbleArr.splice(i,1);
+                            continue;
+                        }
+                        //画出圆的形状并填充颜色
+                        painting.fillStyle='rgb('+ item.r +','+ item.g+','+ item.b+')';
+                        painting.beginPath();
+                        painting.arc(x,y,item.c_r,0,2*Math.PI,true);
+                        painting.fill();
+                    }
+                },1000/60);
             };
         }
     }
