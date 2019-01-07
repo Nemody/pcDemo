@@ -17,24 +17,31 @@ window.addEventListener('DOMContentLoaded',function (event) {
     //获取第一屏DOM对象
     var bannerLiNodes = document.querySelectorAll('.banner li');
     var bannerBarLiNodes = document.querySelectorAll('.bannerBar li');
-    //获取home的DOM对象
+    var bannerUlNode=document.querySelector('.banner');
+    //获取第一屏home的DOM对象
     var homeNode = document.querySelector('.home');
     //获取第二屏DOM对象
     var planeNodes = document.querySelectorAll('.course img');
     //获取第三屏DOM对象
-    var photoLiNodes=document.querySelectorAll('.works-photo li');
-    var maskNodes=document.querySelectorAll('.works-photo .mask');
-    var maskIconNodes=document.querySelectorAll('.mask-icon');
+    var pencilNodes=document.querySelectorAll('.pencil');
+    //获取第四屏DOM对象
+    var aboutUlNodes=document.querySelectorAll('.about-photo');
     //获取第五屏DOM对象
     var teamUlNode=document.querySelector('.team-photo');
     var teamLiNodes=document.querySelectorAll('.team-photo li');
+    var teamTitleNode=document.querySelector('.team-title');
+    var teamTextNode=document.querySelector('.team-text');
+    //变量定义区
+    var nowIndex = 0;
+    var lastIndex=0;
+    var wheelTimer = 0;
+    var arrowHalfWidth = arrow.offsetWidth / 2;
+    //气泡效果之画布canvas相关变量
     var myCanvas=null;
     var createTimer=null;
     var paintingTimer=null;
-    //变量定义区
-    var nowIndex = 0;
-    var wheelTimer = 0;
-    var arrowHalfWidth = arrow.offsetWidth / 2;
+
+
     //初始化显示
     arrow.style.left = headerLiNodes[0].getBoundingClientRect().left + headerLiNodes[0].offsetWidth / 2 - arrowHalfWidth + 'px';
     headerDownNodes[0].style.width = '100%';
@@ -52,17 +59,98 @@ window.addEventListener('DOMContentLoaded',function (event) {
 
     //页面移动效果
     function move(nowIndex) {
-        for (var j = 0; j < headerDownNodes.length; j++) {
+        //定义了lastIndex之后，只需要清除lastIndex对应的样式即可，不需要遍历清除所有相关的样式，提高效率
+       /* for (var j = 0; j < headerDownNodes.length; j++) {
             headerDownNodes[j].style.width = '';
             olLiNodes[j].className = '';
-        }
+        }*/
+
+
+       //为当前页面设置相关操作
         headerDownNodes[nowIndex].style.width = '100%';
         olLiNodes[nowIndex].className = 'active';
         arrow.style.left = headerLiNodes[nowIndex].getBoundingClientRect().left + headerLiNodes[nowIndex].offsetWidth / 2 - arrowHalfWidth + 'px';
         contentUlNode.style.top = -nowIndex * content.offsetHeight + 'px';
+        //当前页面执行入场动画
+        animationArr[nowIndex].anIn();
+        //清除上一次的操作
+        headerDownNodes[lastIndex].style.width = '';
+        olLiNodes[lastIndex].className = '';
+        //上一个页面执行出场动画
+        animationArr[lastIndex].anOut();
+
+        //同步lastIndex,方便下次操作
+        lastIndex=nowIndex;
     };
 
-
+    //出入场动画
+    var animationArr=[
+        {
+            anOut:function () {
+                bannerUlNode.style.transform='translateY(-200px)';
+                bannerUlNode.style.opacity=0;
+            },
+            anIn:function () {
+                bannerUlNode.style.transform='translateY(0)';
+                bannerUlNode.style.opacity=1;
+            }
+        },
+        {
+            anOut:function () {
+                //左上  左下  右上
+                planeNodes[0].style.transform='translate(-200px,-200px)';
+                planeNodes[1].style.transform='translate(-200px,200px)';
+                planeNodes[2].style.transform='translate(200px,-200px)';
+            },
+            anIn:function () {
+                planeNodes[0].style.transform='translate(0,0)';
+                planeNodes[1].style.transform='translate(0,0)';
+                planeNodes[2].style.transform='translate(0,0)';
+            }
+        },
+        {
+            anOut:function () {
+                //上   下   下
+                pencilNodes[0].style.transform='translateY(-200px)';
+                pencilNodes[1].style.transform='translateY(200px)';
+                pencilNodes[2].style.transform='translateY(200px)';
+            },
+            anIn:function () {
+                pencilNodes[0].style.transform='translateY(0)';
+                pencilNodes[1].style.transform='translateY(0)';
+                pencilNodes[2].style.transform='translateY(0)';
+            }
+        },
+        {
+            anOut:function () {
+                aboutUlNodes[0].style.transform='rotate(30deg)';
+                aboutUlNodes[1].style.transform='rotate(-30deg)';
+            },
+            anIn:function () {
+                aboutUlNodes[0].style.transform='rotate(0)';
+                aboutUlNodes[1].style.transform='rotate(0)';
+            }
+        },
+        {
+            anOut:function () {
+                teamTitleNode.style.transform='translateX(-200px)';
+                teamTextNode.style.transform='translateX(200px)';
+            },
+            anIn:function () {
+                teamTitleNode.style.transform='translateX(0)';
+                teamTextNode.style.transform='translateX(0)';
+            }
+        }
+    ];
+    //在初始时，除第一个外所有的页面均执行出场动画
+    for (var i = 0; i < animationArr.length; i++) {
+       if(i===0){
+           continue;
+           // animationArr[i].anIn();
+       }else {
+           animationArr[i].anOut();
+       } ;
+    };
 
     //内容区绑定滚轮事件
     document.onmousewheel = wheel;
@@ -119,8 +207,10 @@ window.addEventListener('DOMContentLoaded',function (event) {
     firstViewHandle();
     function firstViewHandle() {
 
-        var lastIndex = 0;
-        var nowIndex = 0;
+        //定义上一个页面的索引值
+        var previousIndex=0;
+        //定义当前页面的索引值
+        var presentIndex=0;
         var lastTime = 0;
         var timer = 0;
 
@@ -131,28 +221,28 @@ window.addEventListener('DOMContentLoaded',function (event) {
                 var nowTime = Date.now();
                 if (nowTime - lastTime < 2000) return;
                 lastTime = nowTime;
-                //同步nowIndex
-                nowIndex = this.index;
-                if (nowIndex === lastIndex) return;
+                //同步presentIndex
+                presentIndex = this.index;
+                if (presentIndex === previousIndex) return;
 
-                if (nowIndex > lastIndex) {
+                if (presentIndex > previousIndex) {
                     //点击的是右边的小圆点
-                    bannerLiNodes[nowIndex].className = 'common-title right-show';
-                    bannerLiNodes[lastIndex].className = 'common-title left-hide';
+                    bannerLiNodes[presentIndex].className = 'common-title right-show';
+                    bannerLiNodes[previousIndex].className = 'common-title left-hide';
 
-                } else if (nowIndex < lastIndex) {
+                } else if (presentIndex < previousIndex) {
                     //点击的是左边的小圆点
-                    bannerLiNodes[nowIndex].className = 'common-title left-show';
-                    bannerLiNodes[lastIndex].className = 'common-title right-hide';
+                    bannerLiNodes[presentIndex].className = 'common-title left-show';
+                    bannerLiNodes[previousIndex].className = 'common-title right-hide';
                 }
 
                 //清除上一次点击的小圆点的效果
-                bannerBarLiNodes[lastIndex].className = '';
+                bannerBarLiNodes[previousIndex].className = '';
                 //点击谁谁变成白色
                 this.className = 'active';
 
-                //每一次点击后将本次下标同步至lastIndex,以便于下次点击时保持同步
-                lastIndex = nowIndex;
+                //每一次点击后将本次下标同步至previousIndex,以便于下次点击时保持同步
+                previousIndex = presentIndex;
             };
         }
         homeNode.onmouseenter = function () {
@@ -164,21 +254,21 @@ window.addEventListener('DOMContentLoaded',function (event) {
         autoPlay();
         function autoPlay() {
             timer = setInterval(function () {
-                nowIndex++;
+                presentIndex++;
                 //为了保证在自动轮播时用户不可以点击切换，因此同步时间为当前时间
                 //使得用户点击时不满足2s的条件从而不能点击
                 lastTime=Date.now();
-                if (nowIndex >= 4) {
-                    nowIndex = 0;
+                if (presentIndex >= 4) {
+                    presentIndex = 0;
                 }
-                bannerLiNodes[nowIndex].className = 'common-title right-show';
-                bannerLiNodes[lastIndex].className = 'common-title left-hide';
+                bannerLiNodes[presentIndex].className = 'common-title right-show';
+                bannerLiNodes[previousIndex].className = 'common-title left-hide';
                 //清除上一次小圆点的效果
-                bannerBarLiNodes[lastIndex].className = '';
-                bannerBarLiNodes[nowIndex].className = 'active';
+                bannerBarLiNodes[previousIndex].className = '';
+                bannerBarLiNodes[presentIndex].className = 'active';
 
-                //每一次将下标同步至lastIndex,以便于下次保持同步
-                lastIndex = nowIndex;
+                //每一次将下标同步至previousIndex,以便于下次保持同步
+                previousIndex = presentIndex;
             }, 2500);
         }
 

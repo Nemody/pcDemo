@@ -149,6 +149,7 @@ img {
     height: 20%;
     width: 100%;
     background-repeat: no-repeat;
+    overflow: hidden;
 }
 
 /*设置各屏的背景图*/
@@ -189,6 +190,7 @@ img {
     height: 100%;
     transform-style: preserve-3d;
     perspective: 1000px;
+    transition: transform 1s,opacity 1s;
 }
 
 .banner li {
@@ -322,13 +324,6 @@ img {
 }
 
 /*第二屏样式*/
-.content-main li:nth-child(2){
-    overflow: hidden;
-}
-.course{
-    position: relative;
-
-}
 .course-title{
     margin: 50px;
 }
@@ -404,7 +399,7 @@ img {
     top: -100px;
     width: 359px;
     height: 283px;
-    transform: translate(0px,0px);
+    transition: transform 1s;
 }
 .plane2{
     position: absolute;
@@ -412,7 +407,7 @@ img {
     top: 200px;
     width: 309px;
     height: 249px;
-    transform: translate(0px,0px);
+    transition: transform 1s;
 }
 .plane3{
     position: absolute;
@@ -420,7 +415,7 @@ img {
     top: 400px;
     width: 230px;
     height: 182px;
-    transform: translate(0px,0px);
+    transition: transform 1s;
 }
 
 
@@ -502,29 +497,27 @@ img {
         transform: rotateY(180deg);
     }
 }
-.pencel1{
+.pencil{
     position: absolute;
+    transition: transform 1s;
+}
+.pencil1{
     left:500px;
     top: 0px;
     width: 180px;
     height: 79px;
-    transform: translate(0px,0px);
 }
-.pencel2{
-    position: absolute;
+.pencil2{
     left: 300px;
     top: 250px;
     width: 268px;
     height: 38px;
-    transform: translate(0px,0px);
 }
-.pencel3{
-    position: absolute;
+.pencil3{
     left: 650px;
     top: 300px;
     width: 441px;
     height: 231px;
-    transform: translate(0px,0px);
 }
 
 /*第四屏样式*/
@@ -546,6 +539,7 @@ img {
     border-radius: 8px;
     background-repeat: no-repeat;
     z-index: 5;
+    transition: transform 1s;
 }
 .about-photo1{
     left:750px;
@@ -615,6 +609,7 @@ img {
 .team-title{
     margin: 50px;
     width: 400px;
+    transition: transform 1s;
 }
 .team-text{
     position: absolute;
@@ -622,6 +617,7 @@ img {
     top: 0;
     margin: 50px;
     width: 400px;
+    transition: transform 1s;
 }
 .team-photo{
     position: absolute;
