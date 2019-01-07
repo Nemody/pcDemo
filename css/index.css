@@ -73,6 +73,10 @@ img {
 .music-icon {
     float: left;
     margin-top: 50px;
+    width: 14px;
+    height: 14px;
+    background-image: url("../img/musicoff.gif");
+    background-repeat: no-repeat;
 }
 
 /*头部右侧导航区*/

@@ -7,6 +7,8 @@ window.addEventListener('DOMContentLoaded',function (event) {
     var headerLiNodes = document.querySelectorAll('.navList li');
     var arrow = document.querySelector('.arrow');
     var headerDownNodes = document.querySelectorAll('.down');
+    var musicIconNode=document.querySelector('.music-icon');
+    var musicNode=document.querySelector('.music');
     //获取内容区DOM对象
     var contentUlNode = document.querySelector('.content-main');
     var content = document.querySelector('.content');
@@ -60,17 +62,6 @@ window.addEventListener('DOMContentLoaded',function (event) {
         contentUlNode.style.top = -nowIndex * content.offsetHeight + 'px';
     };
 
-    //右侧小圆点点击效果
-    rightHandle();
-    function rightHandle() {
-        for (var i = 0; i < olLiNodes.length; i++) {
-            olLiNodes[i].index = i;
-            olLiNodes[i].onclick = function () {
-                nowIndex = this.index;
-                move(nowIndex);
-            }
-        }
-    }
 
 
     //内容区绑定滚轮事件
@@ -193,8 +184,6 @@ window.addEventListener('DOMContentLoaded',function (event) {
 
     }
 
-
-
     //第五屏动画
     fifthViewHandle();
     function fifthViewHandle() {
@@ -299,4 +288,31 @@ window.addEventListener('DOMContentLoaded',function (event) {
             };
         }
     }
+
+    //音量部分的功能
+    musicIconNode.onclick=function () {
+        if(musicNode.paused){
+            //暂停状态  点击后播放 背景图片更改
+            musicNode.play();
+            musicIconNode.style.backgroundImage='url("./img/musicon.gif")';
+        }else {
+            //播放状态  点击后暂停
+            musicNode.pause();
+            musicIconNode.style.backgroundImage='url("./img/musicoff.gif")';
+        }
+
+    };
+
+    //右侧小圆点点击效果--即侧边导航
+    rightHandle();
+    function rightHandle() {
+        for (var i = 0; i < olLiNodes.length; i++) {
+            olLiNodes[i].index = i;
+            olLiNodes[i].onclick = function () {
+                nowIndex = this.index;
+                move(nowIndex);
+            }
+        }
+    }
+
 });
