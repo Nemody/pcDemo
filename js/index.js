@@ -9,15 +9,19 @@ window.addEventListener('DOMContentLoaded',function (event) {
     var headerDownNodes = document.querySelectorAll('.down');
     var musicIconNode=document.querySelector('.music-icon');
     var musicNode=document.querySelector('.music');
+
     //获取内容区DOM对象
     var contentUlNode = document.querySelector('.content-main');
     var content = document.querySelector('.content');
+
     //获取右部小圆点DOM对象
     var olLiNodes = document.querySelectorAll('.rightFlags li');
+
     //获取第一屏DOM对象
     var bannerLiNodes = document.querySelectorAll('.banner li');
     var bannerBarLiNodes = document.querySelectorAll('.bannerBar li');
     var bannerUlNode=document.querySelector('.banner');
+
     //获取第一屏home的DOM对象
     var homeNode = document.querySelector('.home');
     //获取第二屏DOM对象
@@ -26,11 +30,16 @@ window.addEventListener('DOMContentLoaded',function (event) {
     var pencilNodes=document.querySelectorAll('.pencil');
     //获取第四屏DOM对象
     var aboutUlNodes=document.querySelectorAll('.about-photo');
+
     //获取第五屏DOM对象
     var teamUlNode=document.querySelector('.team-photo');
     var teamLiNodes=document.querySelectorAll('.team-photo li');
     var teamTitleNode=document.querySelector('.team-title');
     var teamTextNode=document.querySelector('.team-text');
+
+
+
+
     //变量定义区
     var nowIndex = 0;
     var lastIndex=0;
@@ -41,47 +50,9 @@ window.addEventListener('DOMContentLoaded',function (event) {
     var createTimer=null;
     var paintingTimer=null;
 
-
     //初始化显示
     arrow.style.left = headerLiNodes[0].getBoundingClientRect().left + headerLiNodes[0].offsetWidth / 2 - arrowHalfWidth + 'px';
     headerDownNodes[0].style.width = '100%';
-    //导航区点击效果
-    headerHandle();
-    function headerHandle() {
-        for (var i = 0; i < headerLiNodes.length; i++) {
-            headerLiNodes[i].index = i;
-            headerLiNodes[i].onclick = function () {
-                nowIndex = this.index;
-                move(nowIndex);
-            }
-        }
-    }
-
-    //页面移动效果
-    function move(nowIndex) {
-        //定义了lastIndex之后，只需要清除lastIndex对应的样式即可，不需要遍历清除所有相关的样式，提高效率
-       /* for (var j = 0; j < headerDownNodes.length; j++) {
-            headerDownNodes[j].style.width = '';
-            olLiNodes[j].className = '';
-        }*/
-
-
-       //为当前页面设置相关操作
-        headerDownNodes[nowIndex].style.width = '100%';
-        olLiNodes[nowIndex].className = 'active';
-        arrow.style.left = headerLiNodes[nowIndex].getBoundingClientRect().left + headerLiNodes[nowIndex].offsetWidth / 2 - arrowHalfWidth + 'px';
-        contentUlNode.style.top = -nowIndex * content.offsetHeight + 'px';
-        //当前页面执行入场动画
-        animationArr[nowIndex].anIn();
-        //清除上一次的操作
-        headerDownNodes[lastIndex].style.width = '';
-        olLiNodes[lastIndex].className = '';
-        //上一个页面执行出场动画
-        animationArr[lastIndex].anOut();
-
-        //同步lastIndex,方便下次操作
-        lastIndex=nowIndex;
-    };
 
     //出入场动画
     var animationArr=[
@@ -144,13 +115,100 @@ window.addEventListener('DOMContentLoaded',function (event) {
     ];
     //在初始时，除第一个外所有的页面均执行出场动画
     for (var i = 0; i < animationArr.length; i++) {
-       if(i===0){
-           continue;
-           // animationArr[i].anIn();
-       }else {
-           animationArr[i].anOut();
-       } ;
+        animationArr[i].anOut();
     };
+
+    //开机动画
+    bootAnimation();
+    function bootAnimation() {
+        //在函数中获取wrap区域遮罩层DOM对象，当函数调用完成之后局部变量被释放，节省内存 ，优化性能
+        var wrapMask=document.querySelector('.wrap-mask');
+        var maskUp=document.querySelector('.maskUp');
+        var maskDown=document.querySelector('.maskDown');
+        var maskLine=document.querySelector('.maskLine');
+
+        //定义一个数组，存储所有的图片的路径
+        var srcArr = ['bg1.jpg','bg2.jpg','bg3.jpg','bg4.jpg','bg5.jpg','about1.jpg','about2.jpg','about3.jpg','about4.jpg','worksimg1.jpg','worksimg2.jpg','worksimg3.jpg','worksimg4.jpg','team.png','greenLine.png'];
+
+        for (var i = 0; i < srcArr.length; i++) {
+            //创建相应数量的img对象，设置src属性
+            var imgNode=new Image();
+            imgNode.src='img/'+ srcArr[i];
+
+            //定义一个变量来存储图片成功加载的个数
+            var srcNum=0;
+
+            imgNode.onload=function () {
+                srcNum++;
+                //页面加载的进度 = 加载成功的图片数/图片总数
+
+                var loading=srcNum/srcArr.length;
+                maskLine.style.width=100*loading+'%';
+
+                if(loading===1){
+                    maskUp.style.height=0;
+                    maskDown.style.height=0;
+                    maskLine.style.display='none';
+                };
+
+                //监测过渡结束，即让第一屏执行入场动画
+                if(document.addEventListener){
+                    maskUp.addEventListener('transitionend',function () {
+                      //移除遮罩层
+                        wrapMask.remove();
+                        //第一屏执行入场动画
+                        animationArr[0].anIn();
+                    });
+                } else {
+                    setTimeout(function () {
+                        //移除遮罩层
+                        wrapMask.remove();
+                        //第一屏执行入场动画
+                        animationArr[0].anIn();
+                    },1000);
+                };
+            };
+
+        }
+    }
+
+    //导航区点击效果
+    headerHandle();
+    function headerHandle() {
+        for (var i = 0; i < headerLiNodes.length; i++) {
+            headerLiNodes[i].index = i;
+            headerLiNodes[i].onclick = function () {
+                nowIndex = this.index;
+                move(nowIndex);
+            }
+        }
+    }
+
+    //页面移动效果
+    function move(nowIndex) {
+        //定义了lastIndex之后，只需要清除lastIndex对应的样式即可，不需要遍历清除所有相关的样式，提高效率
+       /* for (var j = 0; j < headerDownNodes.length; j++) {
+            headerDownNodes[j].style.width = '';
+            olLiNodes[j].className = '';
+        }*/
+
+       //为当前页面设置相关操作
+        headerDownNodes[nowIndex].style.width = '100%';
+        olLiNodes[nowIndex].className = 'active';
+        arrow.style.left = headerLiNodes[nowIndex].getBoundingClientRect().left + headerLiNodes[nowIndex].offsetWidth / 2 - arrowHalfWidth + 'px';
+        contentUlNode.style.top = -nowIndex * content.offsetHeight + 'px';
+        //当前页面执行入场动画
+        animationArr[nowIndex].anIn();
+        //清除上一次的操作
+        headerDownNodes[lastIndex].style.width = '';
+        olLiNodes[lastIndex].className = '';
+        //上一个页面执行出场动画
+        animationArr[lastIndex].anOut();
+
+        //同步lastIndex,方便下次操作
+        lastIndex=nowIndex;
+    };
+
 
     //内容区绑定滚轮事件
     document.onmousewheel = wheel;

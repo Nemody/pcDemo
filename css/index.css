@@ -53,8 +53,44 @@ img {
 #wrap {
     height: 100%;
     position: relative;
+    overflow: hidden;
 }
-
+.wrap-mask{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+.maskUp{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50%;
+    background: #009ee0;
+    transition: height 1s;
+}
+.maskDown{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+    background: #009ee0;
+    transition: height 1s;
+}
+.maskLine{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 2px;
+    background: #fff;
+    transition: width 1s;
+    /*width: 400px;*/
+    z-index: 20;
+}
 .header {
     position: relative;
 }
